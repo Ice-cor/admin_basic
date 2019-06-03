@@ -1,7 +1,7 @@
 <template>
   <div class="table">
-    <SearchBar></SearchBar>
-    <SyntheticalTable></SyntheticalTable>
+    <search-bar :searchItems="searchItems" />
+    <synthetical-table />
   </div>
 </template>
 
@@ -10,66 +10,39 @@ import SearchBar from './components/SearchBar'
 import SyntheticalTable from './components/SyntheticalTable'
 export default {
   name: 'Table',
-  components: {SearchBar,SyntheticalTable},
+  components: { SearchBar, SyntheticalTable },
   data() {
     return {
-      value: '',
-      tableData: [
+      searchItems: [
         {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          type: 'select_phone',
+          info: {
+            fieldName: ['searchType','mappingType','searchValue'],
+            placeholder: '请选择类型',
+            options: [
+              { label: '手机号', value: '1' },
+              { label: '身份证', value: '2' },
+              { label: '姓名', value: '3' }
+            ],
+          }
         },
         {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          type: 'select',
+          info: {
+            fieldName: 'fieldName2',
+            placeholder: '平台类型',
+            options: [
+              { label: '租来用', value: '1' },
+              { label: '提前用', value: '2' }
+            ]
+          }
         },
         {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          type: 'input',
+          info: { fieldName: 'fieldName3', placeholder: '请输入1111' }
         },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }
-      ],
-      input1: '',
-      input2: '',
-      input3: '',
-      select: ''
+        { type: 'date', info: { label: '' } }
+      ]
     }
   }
 }

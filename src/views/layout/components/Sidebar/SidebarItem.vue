@@ -1,27 +1,27 @@
 <template>
-  <div
-    v-if="!item.hidden&&item.children"
-    class="menu-wrapper"
-  >
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+  <div v-if="!item.hidden && item.children" class="menu-wrapper">
+    <template
+      v-if="
+        hasOneShowingChild(item.children, item) &&
+          (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+          !item.alwaysShow
+      "
+    >
       <div :to="resolvePath(onlyOneChild.path)">
         <!-- 原型 app-link 有bug，暂时div代替 -->
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
-          :class="{'submenu-title-noDropdown':!isNest}"
+          :class="{ 'submenu-title-noDropdown': !isNest }"
         >
           <item
             v-if="onlyOneChild.meta"
-            :icon="onlyOneChild.meta.icon||item.meta.icon"
-            :title="(onlyOneChild.meta.title)"
+            :icon="onlyOneChild.meta.icon || item.meta.icon"
+            :title="onlyOneChild.meta.title"
           />
         </el-menu-item>
       </div>
     </template>
-    <el-submenu
-      :index="item.name||item.path"
-      v-else
-    >
+    <el-submenu :index="item.name || item.path" v-else>
       <template slot="title">
         <item
           v-if="item.meta"
@@ -30,12 +30,9 @@
         />
       </template>
 
-      <template
-        v-for="child in item.children"
-        v-if="!child.hidden"
-      >
+      <template v-for="child in item.children" v-if="!child.hidden">
         <sidebar-item
-          v-if="child.children&&child.children.length>0"
+          v-if="child.children && child.children.length > 0"
           :is-nest="true"
           :item="child"
           :key="child.path"
@@ -43,11 +40,7 @@
           class="nest-menu"
         />
 
-        <router-link
-          v-else
-          :to="resolvePath(child.path)"
-          :key="child.name"
-        >
+        <router-link v-else :to="resolvePath(child.path)" :key="child.name">
           <el-menu-item :index="resolvePath(child.path)">
             <item
               v-if="child.meta"
@@ -58,7 +51,6 @@
         </router-link>
       </template>
     </el-submenu>
-
   </div>
 </template>
 
@@ -109,7 +101,11 @@ export default {
         return true
       }
       if (showingChildren.length === 0) {
-        this.onlyOneChild = { ...parent, path: `/${parent.name}`, noShowingChildren: true }
+        this.onlyOneChild = {
+          ...parent,
+          path: `/${parent.name}`,
+          noShowingChildren: true
+        }
         // console.log(this.onlyOneChild,'only')
         return true
       }

@@ -9,8 +9,11 @@
         :to="item.path"
         :key="index"
       >
-        {{item.title}}
-        <span class="el-icon-close" @click.prevent.stop="closeTheTag(item, index)"></span>
+        {{ item.title }}
+        <span
+          class="el-icon-close"
+          @click.prevent.stop="closeTheTag(item, index)"
+        ></span>
       </router-link>
       <!-- <el-tag v-for="(item, index) in tagNavList" :key="index" closable @close="closeTheTag(item, index)">
         <router-link :to="item.path" :key="index">{{item.title}}</router-link>
@@ -53,7 +56,7 @@ export default {
         path: this.$route.path,
         title: this.$route.meta.title
       })
-      this.$router.push({path: this.$route.path})
+      this.$router.push({ path: this.$route.path })
     },
     isActive(item) {
       return item.path === this.$route.path
@@ -92,56 +95,56 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .tag-nav {
-    flex: 1;
-    // width: 100%;
-    height: 100%;
-    padding: 9px;
-    background: #fff;
-    box-sizing: border-box;
-    .tag-nav-item {
-      display: inline-block;
-      position: relative;
-      padding: 4px 10px;
-      margin-right: 10px;
-      border: 1px solid teal;
-      border-radius: 4px;
-      background-color: white;
-      text-decoration: none;
-      // height: 40px;
-      // line-height: 40px;
-      font-size: 14px;
-      color: #606266;
-      span {
-        width: 16px;
-        height: 16px;
-        line-height: 16px;
-        border-radius: 50%;
-        text-align: center;
-        vertical-align: middle;
-        transition: all .3s ease;
-        transform-origin: 100% 50%;
-        font-size: 12px;
-        color: #52bab5;
-        &:before {
-          display: inline-block;
-        }
-        &:hover {
-          background-color: #3580ce;
-          color: rgb(191, 203, 217);
-        }
+.tag-nav {
+  flex: 1;
+  // width: 100%;
+  height: 100%;
+  padding: 9px;
+  background: #fff;
+  box-sizing: border-box;
+  .tag-nav-item {
+    display: inline-block;
+    position: relative;
+    padding: 4px 10px;
+    margin-right: 10px;
+    border: 1px solid teal;
+    border-radius: 4px;
+    background-color: white;
+    text-decoration: none;
+    // height: 40px;
+    // line-height: 40px;
+    font-size: 14px;
+    color: #606266;
+    span {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      border-radius: 50%;
+      text-align: center;
+      vertical-align: middle;
+      transition: all 0.3s ease;
+      transform-origin: 100% 50%;
+      font-size: 12px;
+      color: #52bab5;
+      &:before {
+        display: inline-block;
       }
-      &.cur{
-        background-color: teal;
+      &:hover {
+        background-color: #3580ce;
+        color: rgb(191, 203, 217);
+      }
+    }
+    &.cur {
+      background-color: teal;
+      color: #fff;
+      & span {
         color: #fff;
-        & span{
-          color: #fff;
-          &:hover{
-            // background-color: lighten(#52bab5, 34%);
-            color: rgb(191, 203, 217);
-          }
+        &:hover {
+          // background-color: lighten(#52bab5, 34%);
+          color: rgb(191, 203, 217);
         }
       }
     }
   }
+}
 </style>

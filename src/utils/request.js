@@ -4,8 +4,8 @@ import store from '../store'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url
-  timeout: 5000, // 请求超时时间
+  baseURL: 'http://localhost:8080/', // api的base_url
+  timeout: 5000 // 请求超时时间
   // headers: {
   //   client_ip: '192.168.0.174'
   // }
@@ -14,7 +14,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    if (store.getters.token&&config.method==='post') {
+    if (store.getters.token && config.method === 'post') {
       let dataObj = JSON.parse(config.data)
       dataObj.token = store.getters.token
       dataObj.operatorId = store.getters.info.operatorId

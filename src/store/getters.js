@@ -1,11 +1,20 @@
 function keepStorage(state, key) {
   if (!state[key]) {
-    state[key] = JSON.parse(sessionStorage.getItem(key)) !==null ? JSON.parse(sessionStorage.getItem(key)) : ''
+    state[key] =
+      JSON.parse(sessionStorage.getItem(key)) !== null
+        ? JSON.parse(sessionStorage.getItem(key))
+        : ''
   } else if (Array.isArray(state[key]) && state[key].length === 0) {
-    state[key] = JSON.parse(sessionStorage.getItem(key)) !==null ? JSON.parse(sessionStorage.getItem(key)) : []
+    state[key] =
+      JSON.parse(sessionStorage.getItem(key)) !== null
+        ? JSON.parse(sessionStorage.getItem(key))
+        : []
   } else if (Object.keys(state[key]).length === 0) {
-    state[key] = JSON.parse(sessionStorage.getItem(key)) !==null ? JSON.parse(sessionStorage.getItem(key)) : {}
-  } else if (key == 'routers' && state[key].length===5) {
+    state[key] =
+      JSON.parse(sessionStorage.getItem(key)) !== null
+        ? JSON.parse(sessionStorage.getItem(key))
+        : {}
+  } else if (key == 'routers' && state[key].length === 5) {
     state[key] = JSON.parse(sessionStorage.getItem(key))
   }
   return state[key]
@@ -23,6 +32,5 @@ const getters = {
   routers: state => state.user.routers,
   addRouters: state => state.user.addRouters
 }
-
 
 export default getters

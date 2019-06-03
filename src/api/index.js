@@ -72,9 +72,9 @@ export function getRolePermissionList(operatorId, token, roleId) {
   })
 }
 
-//获取分组列表
-export function getGroupCollection(data) {
-  return _post('group/getGroupCollection', data)
+//获取table列表数据
+export function getTableList(data) {
+  return _post('group/getTableList', data)
 }
 
 //获取分组列表2

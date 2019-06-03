@@ -1,11 +1,11 @@
 <template>
-    <div>
-        我是角色管理页面
-    </div>
+  <div>
+    我是角色管理页面
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'roleList'
+  name: 'roleList'
 }
 </script>

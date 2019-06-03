@@ -64,19 +64,22 @@ const user = {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         // login(username, userInfo.password).then(res => {
-          axios.post('http://localhost:8080/system/login',userInfo).then(res=>{
-          const data = res.data
-          if (data.status==0&&data.token) {
-            commit('SET_TOKEN', data.token)
-            commit('SET_INFO', data.operatorInfo)
-          }
-          setTimeout(()=> {
-            resolve()
-          },1000)
-          //模拟接口数据返回延迟
-        }).catch(error => {
-          reject(error)
-        })
+        axios
+          .post('http://localhost:8080/system/login', userInfo)
+          .then(res => {
+            const data = res.data
+            if (data.status == 0 && data.token) {
+              commit('SET_TOKEN', data.token)
+              commit('SET_INFO', data.operatorInfo)
+            }
+            setTimeout(() => {
+              resolve()
+            }, 1000)
+            //模拟接口数据返回延迟
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
     //获取管理员信息
@@ -94,16 +97,18 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo().then(res => {
-          const data = res.operatorInfo
-          commit('SET_INFO', data)
-          resolve(data)
-        }).catch(error => {
-          reject(error)
-        })
+        getInfo()
+          .then(res => {
+            const data = res.operatorInfo
+            commit('SET_INFO', data)
+            resolve(data)
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
-    
+
     // 获取菜单
     GenerateRoutes({ commit }, data) {
       // console.log(this.state,'state')
@@ -114,46 +119,54 @@ const user = {
         const token = this.getters.token
 
         // getMenus(operatorId,token).then(res => {
-          axios.post('http://localhost:8080/system/login',operatorId,token).then(res=>{
-          const data = res.data.operatorInfo.menus
-          let menus = data.map(item => {
-            return {
-              path: `/${item.name}`,
-              name: item.name,
-              component: (resolve) => require(['@/views/layout/Layout'], resolve),
-              redirect: `/${item.name}/${item.items&&item.items.length>0?item.items[0].name:''}`,
-              meta: { title: item.text, icon: item.icon},
-              children: item.items.map(obj => {
-                return {
-                  path: obj.name,
-                  name: obj.name,
-                  hidden: hiddenWhite.includes(obj.name),
-                  meta: { title: obj.text},
-                  component: (resolve) => require([`@/views/${item.name}/${obj.name}`], resolve)
-                }
-              })
-            }
+        axios
+          .post('http://localhost:8080/system/login', operatorId, token)
+          .then(res => {
+            const data = res.data.operatorInfo.menus
+            let menus = data.map(item => {
+              return {
+                path: `/${item.name}`,
+                name: item.name,
+                component: resolve =>
+                  require(['@/views/layout/Layout'], resolve),
+                redirect: `/${item.name}/${
+                  item.items && item.items.length > 0 ? item.items[0].name : ''
+                }`,
+                meta: { title: item.text, icon: item.icon },
+                children: item.items.map(obj => {
+                  return {
+                    path: obj.name,
+                    name: obj.name,
+                    hidden: hiddenWhite.includes(obj.name),
+                    meta: { title: obj.text },
+                    component: resolve =>
+                      require([`@/views/${item.name}/${obj.name}`], resolve)
+                  }
+                })
+              }
+            })
+            menus.push({ path: '*', redirect: '/404', hidden: true })
+            commit('SET_ROUTERS', menus)
+            resolve(menus)
           })
-          menus.push({ path: '*', redirect: '/404', hidden: true })
-          commit('SET_ROUTERS', menus)
-          resolve(menus)
-        })
       })
     },
 
     // 登出
-    LogOut({commit}) {
+    LogOut({ commit }) {
       return new Promise((resolve, reject) => {
-        outLogin().then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_INFO', {})
-          commit('SET_ROUTERS', [])
-          sessionStorage.clear()
-          // removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        outLogin()
+          .then(() => {
+            commit('SET_TOKEN', '')
+            commit('SET_INFO', {})
+            commit('SET_ROUTERS', [])
+            sessionStorage.clear()
+            // removeToken()
+            resolve()
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
 

@@ -1,10 +1,17 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
       <h3 class="title">
         <span style="display: flex;margin-right: 12px">
-            <img src="@/assets/logo.png" alt="logo">
-          </span>
+          <img src="@/assets/logo.png" alt="logo" />
+        </span>
 
         中祺 · 中台系统模版
       </h3>
@@ -12,19 +19,36 @@
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="用户名" />
+        <el-input
+          v-model="loginForm.username"
+          name="username"
+          type="text"
+          auto-complete="on"
+          placeholder="用户名"
+        />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="password" />
         </span>
-        <el-input :type="pwdType" v-model="loginForm.password" name="password" auto-complete="on" placeholder="密码" @keyup.enter.native="handleLogin" />
+        <el-input
+          :type="pwdType"
+          v-model="loginForm.password"
+          name="password"
+          auto-complete="on"
+          placeholder="密码"
+          @keyup.enter.native="handleLogin"
+        />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="pwdType==='password'?'eye':'eye-open'" />
+          <svg-icon :icon-class="pwdType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">
+        <el-button
+          :loading="loading"
+          type="primary"
+          @click.native.prevent="handleLogin"
+        >
           登陆
         </el-button>
       </el-form-item>
@@ -33,7 +57,7 @@
 </template>
 
 <script>
-// import { isvalidUsername } from '@/utils/validate'
+import { isvalidUsername } from '@/utils/validate'
 import mock from '@/mock'
 import axios from 'axios'
 export default {
@@ -103,7 +127,7 @@ $light_gray: #eee;
 
 /* reset element-ui css */
 .login-container {
-  input:-webkit-autofill{
+  input:-webkit-autofill {
     background-color: #fff;
   }
   .el-input {
@@ -118,17 +142,17 @@ $light_gray: #eee;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
-      background-color:#F0F2F5 !important;
+      background-color: #f0f2f5 !important;
       color: #909399;
       &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px #F0F2F5 inset !important;
+        -webkit-box-shadow: 0 0 0px 1000px #f0f2f5 inset !important;
         -webkit-text-fill-color: #909399 !important;
       }
     }
   }
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #F0F2F5;
+    background: #f0f2f5;
     border-radius: 5px;
     color: #454545;
     .el-button {
@@ -153,7 +177,7 @@ $light_gray: #eee;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     width: 626px;
     padding: 40px 120px;
     background-color: white;
@@ -184,13 +208,13 @@ $light_gray: #eee;
     align-items: center;
     justify-content: center;
     font-size: 26px;
-    font-weight:400;
-    line-height:40px;
+    font-weight: 400;
+    line-height: 40px;
     // color: $light_gray;
     margin: 0px auto 40px auto;
     text-align: center;
     font-weight: bold;
-    color:#303133;
+    color: #303133;
   }
   .show-pwd {
     position: absolute;

@@ -1,62 +1,30 @@
 <template>
   <div class="syntheticalTable">
     <div class="table_item">
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-      >
+      <el-table :data="tableData" size="small" style="width: 100%">
         <el-table-column
-          type="selection"
-          width="55"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="180"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="180"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-        >
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          label="操作"
-          width="100"
-        >
+          v-for="(item,index) in columns"
+          :fixed="item.fixed"
+          :prop="item.prop"
+          :label="item.label"
+          :width="item.width"
+          :class-name="item.bold ? 'bold' : ''"
+          :key="index">
           <template slot-scope="scope">
-            <el-button
-              @click="handleClick(scope.row)"
-              type="text"
-              size="small"
-            >查看</el-button>
-            <el-button
-              type="text"
-              size="small"
-            >编辑</el-button>
+            <template v-if="item.format == 'other'">
+              <slot :row="scope.row" :prop="item.prop" name="otherColums"/>
+            </template>
+
+            <template v-else>
+              {{ scope.row[item.prop] }}
+            </template>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div class="pagination">
-      <el-button
-        type="primary"
-        size="mini"
-        style="margin-left: 10px;"
-      >新增</el-button>
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="1000"
-      >
+      <slot name="playBtn"><span></span></slot>
+      <el-pagination background layout="prev, pager, next" :total="11" @current-change="changePage">
       </el-pagination>
     </div>
   </div>
@@ -65,61 +33,28 @@
 <script>
 export default {
   name: 'SyntheticalTable',
+  props: {
+    tableData: {
+      type: Array,
+      default: () => []
+    },
+    columns: {
+      type: Array,
+      default: () => []
+    },
+    initTable: {
+      type: Function,
+      default: null
+    }
+  },
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }
-      ]
     }
+  },
+  methods: {
+    changePage(page) {
+      this.$emit('onChangePage', page)
+    } 
   }
 }
 </script>
@@ -139,7 +74,7 @@ export default {
     overflow-y: auto;
   }
   .pagination {
-    padding: 12px 0;
+    padding: 12px 0 12px 12px;
     background-color: #fff;
     display: flex;
     justify-content: space-between;

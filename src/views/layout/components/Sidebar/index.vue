@@ -2,10 +2,7 @@
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <div class="logo">
       <span class="logoImg">
-        <img
-          src="@/assets/logo.png"
-          alt=""
-        >
+        <img src="@/assets/logo.png" alt="" />
       </span>
       <h2>租来用运营子系统</h2>
     </div>
@@ -27,7 +24,6 @@
       />
     </el-menu>
   </el-scrollbar>
-
 </template>
 
 <script>
@@ -50,16 +46,16 @@ export default {
 .logo {
   height: 50px;
   font-size: 18px;
-  color: #BFCBD9;
+  color: #bfcbd9;
   display: flex;
   justify-content: center;
   align-items: center;
-  .logoImg{
+  .logoImg {
     display: inline-block;
     width: 24px;
     height: 24px;
     margin-right: 4px;
-    >img{
+    > img {
       width: 100%;
     }
   }

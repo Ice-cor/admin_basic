@@ -1,6 +1,5 @@
 <template>
   <div class="editPassword">
-
     <div class="main">
       <h2>登录密码修改</h2>
       <el-form
@@ -10,33 +9,20 @@
         :rules="rules"
         ref="formData"
       >
-        <el-form-item
-          label="旧密码"
-          prop="oldPassword"
-        >
+        <el-form-item label="旧密码" prop="oldPassword">
           <el-input v-model="formData.oldPassword"></el-input>
         </el-form-item>
-        <el-form-item
-          label="新密码"
-          prop="newPassword"
-        >
+        <el-form-item label="新密码" prop="newPassword">
           <el-input v-model="formData.newPassword"></el-input>
         </el-form-item>
-        <el-form-item
-          label="确认密码"
-          prop="confirmPassword"
-        >
+        <el-form-item label="确认密码" prop="confirmPassword">
           <el-input v-model="formData.confirmPassword"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="submitForm"
-          >修改</el-button>
+          <el-button type="primary" @click="submitForm">修改</el-button>
         </el-form-item>
       </el-form>
     </div>
-
   </div>
 </template>
 
@@ -111,8 +97,8 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  h2{
-      margin-bottom: 24px;
+  h2 {
+    margin-bottom: 24px;
   }
   .main {
     width: 300px;

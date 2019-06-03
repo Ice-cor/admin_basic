@@ -22,7 +22,7 @@ export let constantRouterMap = [
           title: '首页'
         },
         component: () => import('@/views/home/index')
-      },
+      }
       // {
       //   path: '/404',
       //   component: () => import('@/views/errorPage/404'),

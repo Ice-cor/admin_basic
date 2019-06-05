@@ -97,9 +97,12 @@
           >
           </el-date-picker>
         </el-form-item>
+        <template>
+          
+        </template>
       </template>
       <el-form-item>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="handleSearch(searchFormData)">查询</el-button>
         <el-button @click="resetForm('searchForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -114,12 +117,8 @@ export default {
   data() {
     return {
       searchFormData: {},
-      value: '',
-      input1: '',
-      input2: '',
-      input3: '',
-      select: '',
-      dateTime: ''
+      dateTime: '',
+      pageNum: 1
     }
   },
   methods: {
@@ -127,11 +126,15 @@ export default {
       this.searchFormData.startTime = this.dateTime[0]
       this.searchFormData.endTime = this.dateTime[1]
     },
+    handleSearch(searchFormData){
+      this.$emit('handleSearch',searchFormData)
+    },
     resetForm(formName) {
       if (this.$refs[formName]) {
         this.$refs[formName].resetFields()
         this.dateTime = ''
         this.searchFormData = {}
+        this.handleSearch(this.searchFormData)
       }
     }
   }

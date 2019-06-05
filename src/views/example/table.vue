@@ -1,11 +1,15 @@
 <template>
   <div class="table">
-    <SearchBar :searchItems="searchItems"></SearchBar>
-    <SyntheticalTable
+    <SearchBar
+      :searchItems="searchItems"
+      @handleSearch="handleSearch"
+    >
+    
+    </SearchBar>
+    <synthetical-table
       v-loading="loading"
       :tableData="tableData"
       :columns="columns"
-      @onChangePage="changeData"
     >
       <template
         slot="otherColums"
@@ -24,23 +28,30 @@
         </template>
       </template>
 
-      <template slot="playBtn">
+    </synthetical-table>
+    <synthetical-pagination
+      @handlePageChange="handlePageChange"
+      @handleSizeChange="handleSizeChange"
+      :paginationData="paginationData"
+    >
+      <template #playBtn>
         <el-button
           type="primary"
           size="mini"
         >新增</el-button>
       </template>
-    </SyntheticalTable>
+    </synthetical-pagination>
   </div>
 </template>
 
 <script>
 import SearchBar from './components/SearchBar'
 import SyntheticalTable from './components/SyntheticalTable'
+import SyntheticalPagination from './components/SyntheticalPagination'
 import { getTableList } from '@/api'
 export default {
   name: 'Table',
-  components: { SearchBar, SyntheticalTable },
+  components: { SearchBar, SyntheticalTable, SyntheticalPagination },
   data() {
     return {
       loading: false,
@@ -98,32 +109,54 @@ export default {
         },
         { type: 'date', info: { label: '' } }
       ],
-      input1: '',
-      input2: '',
-      input3: '',
-      select: ''
+      searchFormData: {},
+      paginationData: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   created() {
-    this.initTable(1)
+    this.initTable()
   },
   methods: {
-    initTable(page) {
+    initTable() {
+      this.getTableData()
+      console.log(this.searchFormData,'searchFormData')
+      console.log(this.paginationData,'paginationData');
+      
+    },
+    getTableData() {
       this.loading = true
-      getTableList({ pageSize: page })
-        .then(res => {
-          this.tableData = res.list || []
-          this.loading = false
-        })
-        .catch(err => {
+      getTableList({
+        pageNo: this.paginationData.currentPage,
+        pageSize: this.paginationData.pageSize,
+        searchFormData: this.searchFormData
+      }).then(res => {
+        this.tableData = res.list || []
+        this.paginationData.total = res.totalNum
+        this.loading = false
+      })
+       .catch(err => {
           this.loading = false
         })
     },
     handleClick(data) {
       console.log(data)
     },
-    changeData(page) {
-      this.initTable(page)
+    handleSearch(data) {
+      this.searchFormData = data
+      this.paginationData.currentPage = 1
+      this.initTable()
+    },
+    handlePageChange(page) {
+      this.paginationData.currentPage = page
+      this.initTable()
+    },
+    handleSizeChange(size){
+       this.paginationData.pageSize = size
+        this.initTable()
     }
   }
 }

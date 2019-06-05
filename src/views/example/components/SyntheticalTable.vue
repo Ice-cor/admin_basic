@@ -22,11 +22,6 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="pagination">
-      <slot name="playBtn"><span></span></slot>
-      <el-pagination background layout="prev, pager, next" :total="11" @current-change="changePage">
-      </el-pagination>
-    </div>
   </div>
 </template>
 
@@ -52,9 +47,7 @@ export default {
     }
   },
   methods: {
-    changePage(page) {
-      this.$emit('onChangePage', page)
-    } 
+
   }
 }
 </script>
@@ -72,12 +65,6 @@ export default {
     // min-height: 650px;
     // height: 720px;
     overflow-y: auto;
-  }
-  .pagination {
-    padding: 12px 0 12px 12px;
-    background-color: #fff;
-    display: flex;
-    justify-content: space-between;
   }
 }
 </style>

@@ -14,8 +14,12 @@
       <template
         slot="otherColums"
         slot-scope="scope"
+        
       >
-        <template v-if="scope.prop == 'handle'">
+        <slot name="test" v-bind:row="scope.row">
+          {{scope.row.name}}
+        </slot>
+        <!-- <template v-if="scope.prop == 'handle'">
           <el-button
             @click="handleClick(scope.row)"
             type="text"
@@ -25,7 +29,7 @@
             type="text"
             size="small"
           >编辑</el-button>
-        </template>
+        </template> -->
       </template>
 
     </synthetical-table>
@@ -57,7 +61,6 @@ export default {
     return {
       loading: false,
       tableData: [],
-
       searchFormData: {},
       paginationData: {
         currentPage: 1,
@@ -67,12 +70,11 @@ export default {
     }
   },
   created() {
-    this.initTable()
+    this.initPage()
   },
   methods: {
-    initTable() {
+    initPage() {
       this.getTableData()
-      console.log(this.apiUrl,'123123')
       console.log(this.searchFormData, 'searchFormData')
       console.log(this.paginationData, 'paginationData')
     },
@@ -97,15 +99,15 @@ export default {
     handleSearch(data) {
       this.searchFormData = data
       this.paginationData.currentPage = 1
-      this.initTable()
+      this.initPage()
     },
     handlePageChange(page) {
       this.paginationData.currentPage = page
-      this.initTable()
+      this.initPage()
     },
     handleSizeChange(size) {
       this.paginationData.pageSize = size
-      this.initTable()
+      this.initPage()
     }
   }
 }
@@ -113,10 +115,10 @@ export default {
 
 <style lang="scss">
 .table {
+  //纵向布局，table栏自适应，两边固定高
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  // padding: 12px;
 }
 </style>

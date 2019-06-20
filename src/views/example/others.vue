@@ -1,24 +1,53 @@
 <template>
   <div class="others">
-    <my-table
+    <basic-page
       :searchItems="searchItems"
       :columns="columns"
       apiUrl="getTableList"
     >
-
-    </my-table>
+      <template  v-slot:test="slotProps">
+        <el-button
+          @click="handleClick(slotProps.row)"
+          type="text"
+          size="small"
+        >查看</el-button>
+        <el-button
+          type="text"
+          size="small"
+        >编辑</el-button>
+      </template>
+    </basic-page>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <span>这是一段信息</span>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="dialogVisible = false"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import MyTable from '@/components/BasicPage'
+import BasicPage from '@/components/BasicPage'
 export default {
   name: 'Others',
   components: {
-    MyTable
+    BasicPage
   },
   data() {
     return {
+      dialogVisible: false,
       searchItems: [
         {
           type: 'select_phone',
@@ -73,6 +102,11 @@ export default {
           fixed: 'right'
         }
       ]
+    }
+  },
+  methods:{
+    handleClick(data){
+      console.log(data,'data222')
     }
   }
 }

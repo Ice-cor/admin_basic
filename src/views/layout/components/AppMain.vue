@@ -37,5 +37,8 @@ export default {
   background-color: lightgray;
   /* overflow: hidden; */
   /* height: calc(100vh - 50px); */
+  &>div{
+    height: 100%;
+  }
 }
 </style>

@@ -107,7 +107,7 @@ export default {
     position: relative;
     padding: 4px 10px;
     margin-right: 10px;
-    border: 1px solid teal;
+    border: 1px solid #447df7;
     border-radius: 4px;
     background-color: white;
     text-decoration: none;
@@ -135,7 +135,7 @@ export default {
       }
     }
     &.cur {
-      background-color: teal;
+      background-color: #447df7;
       color: #fff;
       & span {
         color: #fff;

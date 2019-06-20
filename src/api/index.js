@@ -73,8 +73,8 @@ export function getRolePermissionList(operatorId, token, roleId) {
 }
 
 //获取table列表数据
-export function getTableList(data) {
-  return _post('group/getTableList', data)
+export function getTableList(url,data) {
+  return _post('group/'+url, data)
 }
 
 //获取分组列表2

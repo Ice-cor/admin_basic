@@ -4,7 +4,7 @@
       :searchItems="searchItems"
       @handleSearch="handleSearch"
     >
-    
+
     </SearchBar>
     <synthetical-table
       v-loading="loading"
@@ -52,63 +52,12 @@ import { getTableList } from '@/api'
 export default {
   name: 'Table',
   components: { SearchBar, SyntheticalTable, SyntheticalPagination },
+  props:['searchItems','apiUrl','columns'],
   data() {
     return {
       loading: false,
       tableData: [],
-      columns: [
-        {
-          prop: 'date',
-          label: '日期',
-          width: 180
-        },
-        {
-          prop: 'name',
-          label: '姓名',
-          width: 180
-        },
-        {
-          prop: 'address',
-          label: '地址'
-        },
-        {
-          prop: 'handle',
-          format: 'other',
-          label: '操作',
-          width: 100,
-          fixed: 'right'
-        }
-      ],
-      searchItems: [
-        {
-          type: 'select_phone',
-          info: {
-            fieldName: ['searchType', 'mappingType', 'searchValue'],
-            placeholder: '请选择类型',
-            options: [
-              { label: '手机号', value: '1' },
-              { label: '身份证', value: '2' },
-              { label: '姓名', value: '3' }
-            ]
-          }
-        },
-        {
-          type: 'select',
-          info: {
-            fieldName: 'fieldName2',
-            placeholder: '平台类型',
-            options: [
-              { label: '租来用', value: '1' },
-              { label: '提前用', value: '2' }
-            ]
-          }
-        },
-        {
-          type: 'input',
-          info: { fieldName: 'fieldName3', placeholder: '请输入1111' }
-        },
-        { type: 'date', info: { label: '' } }
-      ],
+
       searchFormData: {},
       paginationData: {
         currentPage: 1,
@@ -123,22 +72,22 @@ export default {
   methods: {
     initTable() {
       this.getTableData()
-      console.log(this.searchFormData,'searchFormData')
-      console.log(this.paginationData,'paginationData');
-      
+      console.log(this.apiUrl,'123123')
+      console.log(this.searchFormData, 'searchFormData')
+      console.log(this.paginationData, 'paginationData')
     },
     getTableData() {
       this.loading = true
-      getTableList({
+     getTableList(this.apiUrl,{
         pageNo: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
         searchFormData: this.searchFormData
       }).then(res => {
-        this.tableData = res.list || []
-        this.paginationData.total = res.totalNum
-        this.loading = false
-      })
-       .catch(err => {
+          this.tableData = res.list || []
+          this.paginationData.total = res.totalNum
+          this.loading = false
+        })
+        .catch(err => {
           this.loading = false
         })
     },
@@ -154,9 +103,9 @@ export default {
       this.paginationData.currentPage = page
       this.initTable()
     },
-    handleSizeChange(size){
-       this.paginationData.pageSize = size
-        this.initTable()
+    handleSizeChange(size) {
+      this.paginationData.pageSize = size
+      this.initTable()
     }
   }
 }

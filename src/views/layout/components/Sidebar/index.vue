@@ -14,7 +14,7 @@
       mode="vertical"
       background-color="#304156"
       text-color="#bfcbd9"
-      active-text-color="teal"
+      active-text-color="#447df7"
     >
       <sidebar-item
         v-for="route in routers"

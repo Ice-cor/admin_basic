@@ -5,7 +5,7 @@
       :columns="columns"
       apiUrl="getTableList"
     >
-      <template  v-slot:test="slotProps">
+      <template slot="handle" slot-scope="slotProps" >
         <el-button
           @click="handleClick(slotProps.row)"
           type="text"
@@ -16,14 +16,30 @@
           size="small"
         >编辑</el-button>
       </template>
+      <template  slot="name2">
+        <el-button size="mini">
+          你好ma 
+        </el-button>
+      </template>
+      <template slot="name3">
+        <el-button>123</el-button>
+      </template>
+      <template #playBtn>
+        <el-button
+          type="primary"
+          size="mini"
+        >新增</el-button>
+      </template>
     </basic-page>
     <el-dialog
-      title="提示"
+      title="查看信息"
       :visible.sync="dialogVisible"
       width="30%"
       :before-close="handleClose"
     >
-      <span>这是一段信息</span>
+      <h5>日期：{{dialogData.date}}</h5>
+      <h5>姓名：{{dialogData.name}}</h5>
+      <h5>地址：{{dialogData.address}}</h5>
       <span
         slot="footer"
         class="dialog-footer"
@@ -35,6 +51,7 @@
         >确 定</el-button>
       </span>
     </el-dialog>
+
   </div>
 </template>
 
@@ -47,6 +64,7 @@ export default {
   },
   data() {
     return {
+      dialogData: {},
       dialogVisible: false,
       searchItems: [
         {
@@ -86,9 +104,16 @@ export default {
           width: 180
         },
         {
-          prop: 'name',
+          prop: 'name3',
           label: '姓名',
-          width: 180
+          width: 180,
+          custom: true,
+        },
+        {
+          prop: 'name2',
+          custom: true,
+          label: '自定义',
+          width: 100,
         },
         {
           prop: 'address',
@@ -96,7 +121,7 @@ export default {
         },
         {
           prop: 'handle',
-          format: 'other',
+          custom: true,
           label: '操作',
           width: 100,
           fixed: 'right'
@@ -104,9 +129,14 @@ export default {
       ]
     }
   },
-  methods:{
-    handleClick(data){
-      console.log(data,'data222')
+  methods: {
+    handleClick(data) {
+      console.log(data, 'data222')
+      this.dialogData = data
+      this.dialogVisible = true
+    },
+    handleClose() {
+      this.dialogVisible = false
     }
   }
 }

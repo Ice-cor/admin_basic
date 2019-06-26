@@ -1,25 +1,51 @@
 <template>
   <div class="syntheticalTable">
     <div class="table_item">
-      <el-table :data="tableData" size="small" style="width: 100%">
-        <el-table-column
-          v-for="(item,index) in columns"
-          :fixed="item.fixed"
-          :prop="item.prop"
-          :label="item.label"
-          :width="item.width"
-          :class-name="item.bold ? 'bold' : ''"
-          :key="index">
-          <template slot-scope="scope">
+      <el-table
+        :data="tableData"
+        size="small"
+        style="width: 100%"
+      >
+        <template v-for="(item,index) in columns">
+          <el-table-column
+            v-if="!item.custom"
+            :fixed="item.fixed"
+            :prop="item.prop"
+            :label="item.label"
+            :width="item.width"
+            :class-name="item.bold ? 'bold' : ''"
+            :key="index"
+          >
+            <!-- <template slot-scope="scope">
             <template v-if="item.format == 'other'">
               <slot :row="scope.row" :prop="item.prop" name="otherColums"/>
             </template>
-
+            <template v-else-if="item.format === 'custom'">
+              <slot :row="scope.row" :prop="item.prop" :name="item.prop"/>
+            </template>
             <template v-else>
               {{ scope.row[item.prop] }}
             </template>
-          </template>
-        </el-table-column>
+          </template> -->
+          </el-table-column>
+          <el-table-column
+            v-else
+            :fixed="item.fixed"
+            :prop="item.prop"
+            :label="item.label"
+            :width="item.width"
+            :class-name="item.bold ? 'bold' : ''"
+            :key="index"
+          >
+            <template scope="scope">
+              <slot
+                :name="item.prop"
+                :row="scope.row"
+              >我是第三层</slot>
+            </template>
+          </el-table-column>
+        </template>
+
       </el-table>
     </div>
   </div>
@@ -28,6 +54,7 @@
 <script>
 export default {
   name: 'SyntheticalTable',
+  created() {},
   props: {
     tableData: {
       type: Array,
@@ -43,12 +70,9 @@ export default {
     }
   },
   data() {
-    return {
-    }
+    return {}
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 

@@ -11,27 +11,46 @@
       :tableData="tableData"
       :columns="columns"
     >
-      <template
+      <!-- <template v-for="column in columns">
+        <template
+          :slot="column.prop"
+          slot-scope="scope"
+          v-if="column.format == 'custom'"
+        >
+          <slot
+            :name="column.prop"
+            v-bind:row="scope.row"
+          ></slot>
+        </template>
+      </template> -->
+
+      <!-- <template
         slot="otherColums"
         slot-scope="scope"
-        
       >
-        <slot name="test" v-bind:row="scope.row">
+        <slot
+          name="otherColums"
+          v-bind:row="scope.row"
+        >
           {{scope.row.name}}
         </slot>
-        <!-- <template v-if="scope.prop == 'handle'">
-          <el-button
-            @click="handleClick(scope.row)"
-            type="text"
-            size="small"
-          >查看</el-button>
-          <el-button
-            type="text"
-            size="small"
-          >编辑</el-button>
-        </template> -->
+      </template> -->
+
+      <template
+        v-for="(column,index) in customColumns"
+        :slot="column.prop"
+        slot-scope="scope"
+      >
+        <slot
+          :name="column.prop"
+          v-bind:row="scope.row"
+          :index="index"
+        >222</slot>
       </template>
 
+      <!-- <template slot="name2">
+        123
+      </template> -->
     </synthetical-table>
     <synthetical-pagination
       @handlePageChange="handlePageChange"
@@ -39,10 +58,7 @@
       :paginationData="paginationData"
     >
       <template #playBtn>
-        <el-button
-          type="primary"
-          size="mini"
-        >新增</el-button>
+        <slot name="playBtn"></slot>
       </template>
     </synthetical-pagination>
   </div>
@@ -54,9 +70,9 @@ import SyntheticalTable from './components/SyntheticalTable'
 import SyntheticalPagination from './components/SyntheticalPagination'
 import { getTableList } from '@/api'
 export default {
-  name: 'Table',
+  name: 'BasicPage',
   components: { SearchBar, SyntheticalTable, SyntheticalPagination },
-  props:['searchItems','apiUrl','columns'],
+  props: ['searchItems', 'apiUrl', 'columns'],
   data() {
     return {
       loading: false,
@@ -66,11 +82,17 @@ export default {
         currentPage: 1,
         pageSize: 10,
         total: 0
-      }
+      },
     }
   },
   created() {
     this.initPage()
+
+  },
+  computed: {
+    customColumns() {
+      return this.columns.filter(column => column.custom)
+    }
   },
   methods: {
     initPage() {
@@ -80,11 +102,12 @@ export default {
     },
     getTableData() {
       this.loading = true
-     getTableList(this.apiUrl,{
+      getTableList(this.apiUrl, {
         pageNo: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
         searchFormData: this.searchFormData
-      }).then(res => {
+      })
+        .then(res => {
           this.tableData = res.list || []
           this.paginationData.total = res.totalNum
           this.loading = false

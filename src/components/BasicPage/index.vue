@@ -97,15 +97,13 @@ export default {
   methods: {
     initPage() {
       this.getTableData()
-      console.log(this.searchFormData, 'searchFormData')
-      console.log(this.paginationData, 'paginationData')
     },
     getTableData() {
       this.loading = true
       getTableList(this.apiUrl, {
+        ...this.searchFormData,
         pageNo: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
-        searchFormData: this.searchFormData
       })
         .then(res => {
           this.tableData = res.list || []

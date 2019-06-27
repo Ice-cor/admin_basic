@@ -8,8 +8,7 @@ export let constantRouterMap = [
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
-  },
-  {
+  }, {
     path: '/',
     redirect: '/home',
     component: () => import('@/views/layout/Layout'),
@@ -23,16 +22,19 @@ export let constantRouterMap = [
         },
         component: () => import('@/views/home/index')
       }
-      // {
-      //   path: '/404',
-      //   component: () => import('@/views/errorPage/404'),
-      //   hidden: true
-      // },
-      // {
-      //   path: '/401',
-      //   component: () => import('@/views/errorPage/401'),
-      //   hidden: true
-      // }
+    ]
+  }, {
+    path: '/system',
+    redirect: '/system/roleList',
+    component: () => import('@/views/layout/Layout'),
+    meta: { title: '系统管理' },
+    children: [
+      {
+        path: '/roleList',
+        name: 'roleList',
+        meta: { title: '用户管理' },
+        component: () => import('@/views/system/roleList')
+      }
     ]
   }
 ]

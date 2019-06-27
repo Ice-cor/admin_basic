@@ -61,10 +61,15 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        // login(username, userInfo.password).then(res => {
-        axios
+        login(userInfo).then(res => {
+          commit('SET_TOKEN', res.token.accessToken)
+          commit('SET_INFO', { name: res.nickname, id: res.id })
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+        /*axios
           .post('http://localhost:8080/system/login', userInfo)
           .then(res => {
             const data = res.data
@@ -79,7 +84,7 @@ const user = {
           })
           .catch(error => {
             reject(error)
-          })
+          })*/
       })
     },
     //获取管理员信息
@@ -118,37 +123,31 @@ const user = {
         const operatorId = this.getters.info.operatorId
         const token = this.getters.token
 
-        // getMenus(operatorId,token).then(res => {
-        axios
-          .post('http://localhost:8080/system/login', operatorId, token)
-          .then(res => {
-            const data = res.data.operatorInfo.menus
-            let menus = data.map(item => {
-              return {
-                path: `/${item.name}`,
-                name: item.name,
-                component: resolve =>
-                  require(['@/views/layout/Layout'], resolve),
-                redirect: `/${item.name}/${
-                  item.items && item.items.length > 0 ? item.items[0].name : ''
-                }`,
-                meta: { title: item.text, icon: item.icon },
-                children: item.items.map(obj => {
-                  return {
-                    path: obj.name,
-                    name: obj.name,
-                    hidden: hiddenWhite.includes(obj.name),
-                    meta: { title: obj.text },
-                    component: resolve =>
-                      require([`@/views/${item.name}/${obj.name}`], resolve)
-                  }
-                })
-              }
-            })
-            menus.push({ path: '*', redirect: '/404', hidden: true })
-            commit('SET_ROUTERS', menus)
-            resolve(menus)
+        getMenus().then(res => {
+          // const data = res.data.operatorInfo.menus
+          let menus = res.map(item => {
+            const name = item.name ? `/${item.name}` : ''
+            return {
+              path: name || '/',
+              name: item.name,
+              component: (resolve) => require(['@/views/layout/Layout'], resolve),
+              // redirect: `${name}/${item.items[0].name}`,
+              meta: { title: item.text, icon: item.icon },
+              /*children: item.items.map(obj => {
+                return {
+                  path: obj.name,
+                  name: obj.name,
+                  hidden: hiddenWhite.includes(obj.name),
+                  meta: { title: obj.text },
+                  component: (resolve) => require([`@/views${name}/${obj.name}`], resolve)
+                }
+              })*/
+            }
           })
+          menus.push({ path: '*', redirect: '/404', hidden: true })
+          commit('SET_ROUTERS', menus)
+          resolve(menus)
+        })
       })
     },
 

@@ -9,8 +9,5 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
-  },
-  devServer: {
-    proxy: 'http://192.168.0.111:18083'
-  },
+  }
 }

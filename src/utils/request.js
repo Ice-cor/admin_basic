@@ -4,7 +4,7 @@ import store from '../store'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: '/system-api/admins', // api的base_url
+  baseURL: 'http://localhost:8080/', // api的base_url
   timeout: 5000 // 请求超时时间
   // headers: {
   //   client_ip: '192.168.0.174'
@@ -14,8 +14,12 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    if (store.getters.token) {
-      config.headers['Authorization'] = `Bearer ${store.getters.token}` // 让每个请求携带自定义token 请根据实际情况自行修改
+    if (store.getters.token && config.method === 'post') {
+      let dataObj = JSON.parse(config.data)
+      dataObj.token = store.getters.token
+      dataObj.operatorId = store.getters.info.operatorId
+      config.data = JSON.stringify(dataObj)
+      //每个请求加上token及operatorId
     }
     return config
   },
@@ -30,10 +34,11 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const data = response.data
-    if (data.code !== 0) {
+    if (data.status != 0) {
       Message({
         message: data.des,
-        type: 'error'
+        type: 'error',
+        duration: 5 * 1000
       })
       // -103:Token 过期了;
       if (data.status == '-103') {
@@ -48,7 +53,7 @@ service.interceptors.response.use(
       }
       return Promise.reject('error')
     } else {
-      return data.data
+      return data
     }
   },
   error => {

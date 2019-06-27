@@ -10,32 +10,9 @@
       v-loading="loading"
       :tableData="tableData"
       :columns="columns"
+      v-bind="$attrs" 
+      v-on="$listeners"
     >
-      <!-- <template v-for="column in columns">
-        <template
-          :slot="column.prop"
-          slot-scope="scope"
-          v-if="column.format == 'custom'"
-        >
-          <slot
-            :name="column.prop"
-            v-bind:row="scope.row"
-          ></slot>
-        </template>
-      </template> -->
-
-      <!-- <template
-        slot="otherColums"
-        slot-scope="scope"
-      >
-        <slot
-          name="otherColums"
-          v-bind:row="scope.row"
-        >
-          {{scope.row.name}}
-        </slot>
-      </template> -->
-
       <template
         v-for="(column,index) in customColumns"
         :slot="column.prop"
@@ -45,7 +22,7 @@
           :name="column.prop"
           v-bind:row="scope.row"
           :index="index"
-        >222</slot>
+        ></slot>
       </template>
 
       <!-- <template slot="name2">
@@ -86,6 +63,8 @@ export default {
     }
   },
   created() {
+    console.log(this,'副');
+    
     this.initPage()
 
   },
@@ -97,13 +76,15 @@ export default {
   methods: {
     initPage() {
       this.getTableData()
+      console.log(this.searchFormData, 'searchFormData')
+      console.log(this.paginationData, 'paginationData')
     },
     getTableData() {
       this.loading = true
       getTableList(this.apiUrl, {
-        ...this.searchFormData,
         pageNo: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
+        searchFormData: this.searchFormData
       })
         .then(res => {
           this.tableData = res.list || []

@@ -5,7 +5,14 @@
         :data="tableData"
         size="small"
         style="width: 100%"
+        @selection-change="handleSelectionChange"
       >
+        <el-table-column
+          type="selection"
+          width="55"
+          v-if="$attrs.selectionalRows"
+        >
+        </el-table-column>
         <template v-for="(item,index) in columns">
           <el-table-column
             v-if="!item.custom"
@@ -16,17 +23,6 @@
             :class-name="item.bold ? 'bold' : ''"
             :key="index"
           >
-            <!-- <template slot-scope="scope">
-            <template v-if="item.format == 'other'">
-              <slot :row="scope.row" :prop="item.prop" name="otherColums"/>
-            </template>
-            <template v-else-if="item.format === 'custom'">
-              <slot :row="scope.row" :prop="item.prop" :name="item.prop"/>
-            </template>
-            <template v-else>
-              {{ scope.row[item.prop] }}
-            </template>
-          </template> -->
           </el-table-column>
           <el-table-column
             v-else
@@ -41,7 +37,7 @@
               <slot
                 :name="item.prop"
                 :row="scope.row"
-              >我是第三层</slot>
+              ></slot>
             </template>
           </el-table-column>
         </template>
@@ -54,7 +50,9 @@
 <script>
 export default {
   name: 'SyntheticalTable',
-  created() {},
+  created() {
+    
+  },
   props: {
     tableData: {
       type: Array,
@@ -70,9 +68,16 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      multipleSelection: []
+    }
   },
-  methods: {}
+  methods: {
+    handleSelectionChange(val) {
+      // this.multipleSelection = val
+      this.$emit('getSelectionalRows', val)
+    }
+  }
 }
 </script>
 

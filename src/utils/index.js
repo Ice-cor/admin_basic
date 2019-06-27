@@ -92,20 +92,6 @@ export function getQueryObject(url) {
   return obj
 }
 
-// 拼装url
-export function setQueryObject(data) {
-  let dataStr = ''
-  Object.keys(data).forEach(key => {
-    dataStr += key + '=' + data[key] + '&'
-  })
-  if (dataStr) {
-    dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'))
-    return '?' + dataStr
-  } else {
-    return dataStr
-  }
-}
-
 /**
  *get getByteLen
  * @param {Sting} val input value

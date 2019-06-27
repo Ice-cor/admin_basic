@@ -3,26 +3,25 @@
     <basic-page
       :searchItems="searchItems"
       :columns="columns"
+      :selectionalRows="true"
+      @getSelectionalRows="getSelectionalRows"
       apiUrl="getTableList"
     >
-      <template slot="handle" slot-scope="slotProps" >
+      <template  v-slot:handle="slotProps">
         <el-button
           @click="handleClick(slotProps.row)"
           type="text"
           size="small"
-        >查看1</el-button>
+        >查看</el-button>
         <el-button
           type="text"
           size="small"
         >编辑</el-button>
       </template>
-      <template  slot="name2">
+      <template  #name2>
         <el-button size="mini">
           你好ma 
         </el-button>
-      </template>
-      <template slot="name3">
-        <el-button>123</el-button>
       </template>
       <template #playBtn>
         <el-button
@@ -65,6 +64,7 @@ export default {
   data() {
     return {
       dialogData: {},
+      selectionalRows: [],
       dialogVisible: false,
       searchItems: [
         {
@@ -104,10 +104,9 @@ export default {
           width: 180
         },
         {
-          prop: 'name3',
+          prop: 'name',
           label: '姓名',
           width: 180,
-          custom: true,
         },
         {
           prop: 'name2',
@@ -137,6 +136,10 @@ export default {
     },
     handleClose() {
       this.dialogVisible = false
+    },
+    getSelectionalRows(data){
+      console.log(data,'我是爸爸');
+      
     }
   }
 }

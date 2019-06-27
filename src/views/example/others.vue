@@ -10,7 +10,7 @@
           @click="handleClick(slotProps.row)"
           type="text"
           size="small"
-        >查看</el-button>
+        >查看1</el-button>
         <el-button
           type="text"
           size="small"

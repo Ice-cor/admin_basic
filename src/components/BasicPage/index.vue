@@ -10,7 +10,7 @@
       v-loading="loading"
       :tableData="tableData"
       :columns="columns"
-      v-bind="$attrs" 
+      v-bind="$attrs"
       v-on="$listeners"
     >
       <template
@@ -25,9 +25,6 @@
         ></slot>
       </template>
 
-      <!-- <template slot="name2">
-        123
-      </template> -->
     </synthetical-table>
     <synthetical-pagination
       @handlePageChange="handlePageChange"
@@ -66,7 +63,6 @@ export default {
     console.log(this,'副');
     
     this.initPage()
-
   },
   computed: {
     customColumns() {
@@ -81,11 +77,14 @@ export default {
     },
     getTableData() {
       this.loading = true
-      getTableList(this.apiUrl, {
-        pageNo: this.paginationData.currentPage,
+      this.$api.group[this.apiUrl]({pageNo: this.paginationData.currentPage,
         pageSize: this.paginationData.pageSize,
-        searchFormData: this.searchFormData
-      })
+        searchFormData: this.searchFormData})
+      // getTableList(this.apiUrl, {
+      //   pageNo: this.paginationData.currentPage,
+      //   pageSize: this.paginationData.pageSize,
+      //   searchFormData: this.searchFormData
+      // })
         .then(res => {
           this.tableData = res.list || []
           this.paginationData.total = res.totalNum

@@ -1,6 +1,7 @@
 <template>
   <div class="others">
     <basic-page
+      ref="basicPage"
       :searchItems="searchItems"
       :columns="columns"
       :selectionalRows="true"
@@ -27,6 +28,7 @@
         <el-button
           type="primary"
           size="mini"
+          @click="add"
         >新增</el-button>
       </template>
     </basic-page>
@@ -46,7 +48,7 @@
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button
           type="primary"
-          @click="dialogVisible = false"
+          @click="initPage"
         >确 定</el-button>
       </span>
     </el-dialog>
@@ -130,7 +132,7 @@ export default {
   },
   methods: {
     handleClick(data) {
-      console.log(data, 'data222')
+      console.log(data, 'data')
       this.dialogData = data
       this.dialogVisible = true
     },
@@ -140,6 +142,17 @@ export default {
     getSelectionalRows(data){
       console.log(data,'我是爸爸');
       
+    },
+    initPage(){
+      //调用子的initPage方法
+      this.$refs.basicPage.initPage()
+      this.dialogVisible = false
+    },
+    add(){
+      this.$api.system.add({}).then(res => {
+        console.log(res)
+      })
+      .catch(err=>{console.log(err)})
     }
   }
 }

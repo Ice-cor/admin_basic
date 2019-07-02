@@ -4,7 +4,7 @@
       <span class="logoImg">
         <img src="@/assets/logo.png" alt="" />
       </span>
-      <h2>租来用运营子系统</h2>
+      <h2>xx运营系统</h2>
     </div>
     <el-menu
       :show-timeout="200"

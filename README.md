@@ -1,29 +1,11 @@
-# admin_test
+# 后台模版admin_basic
 
-## Project setup
-```
-yarn install
-```
+使用vue-cli 3.x + element UI 开发
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+下载
 
-### Compiles and minifies for production
 ```
-yarn run build
-```
+git clone xxx
 
-### Run your tests
+yarn
 ```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

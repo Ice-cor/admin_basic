@@ -8,7 +8,7 @@
       @getSelectionalRows="getSelectionalRows"
       apiUrl="getTableList"
     >
-      <template  v-slot:handle="slotProps">
+      <template v-slot:handle="slotProps">
         <el-button
           @click="handleClick(slotProps.row)"
           type="text"
@@ -19,10 +19,8 @@
           size="small"
         >编辑</el-button>
       </template>
-      <template  #name2>
-        <el-button size="mini">
-          你好ma 
-        </el-button>
+      <template #tag>
+        <el-tag>我是自定义内容</el-tag>
       </template>
       <template #playBtn>
         <el-button
@@ -32,6 +30,13 @@
         >新增</el-button>
       </template>
     </basic-page>
+    <Details
+      :dialogData="dialogData"
+      :success-call="successCall"
+      ref="details"
+    >
+
+    </Details>
     <el-dialog
       title="查看信息"
       :visible.sync="dialogVisible"
@@ -58,10 +63,12 @@
 
 <script>
 import BasicPage from '@/components/BasicPage'
+import Details from './components/details'
 export default {
   name: 'Others',
   components: {
-    BasicPage
+    BasicPage,
+    Details
   },
   data() {
     return {
@@ -108,13 +115,13 @@ export default {
         {
           prop: 'name',
           label: '姓名',
-          width: 180,
+          width: 180
         },
         {
-          prop: 'name2',
+          prop: 'tag',
           custom: true,
           label: '自定义',
-          width: 100,
+          width: 200
         },
         {
           prop: 'address',
@@ -131,6 +138,9 @@ export default {
     }
   },
   methods: {
+    successCall() {
+      this.$refs.basicPage.initPage()
+    },
     handleClick(data) {
       console.log(data, 'data')
       this.dialogData = data
@@ -139,20 +149,24 @@ export default {
     handleClose() {
       this.dialogVisible = false
     },
-    getSelectionalRows(data){
-      console.log(data,'我是爸爸');
-      
+    getSelectionalRows(data) {
+      console.log(data, '我是爸爸')
     },
-    initPage(){
+    initPage() {
       //调用子的initPage方法
       this.$refs.basicPage.initPage()
       this.dialogVisible = false
     },
-    add(){
-      this.$api.system.add({}).then(res => {
-        console.log(res)
-      })
-      .catch(err=>{console.log(err)})
+    add() {
+      this.$refs.details.show = true
+      this.$api.system
+        .add({})
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

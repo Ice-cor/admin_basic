@@ -83,6 +83,11 @@ export default {
       onlyOneChild: null
     }
   },
+  computed: {
+    name() {
+      return this.data 
+    }
+  },
   methods: {
     hasOneShowingChild(children, parent) {
       // console.log(children,'children')

@@ -10,6 +10,11 @@ export let constantRouterMap = [
     hidden: true
   },
   {
+    path: '/404',
+    component: () => import('@/views/errorPage/404'),
+    hidden: true
+  },
+  {
     path: '/',
     redirect: '/home',
     component: () => import('@/views/layout/Layout'),
@@ -22,12 +27,7 @@ export let constantRouterMap = [
           title: '首页'
         },
         component: () => import('@/views/home/index')
-      }
-      // {
-      //   path: '/404',
-      //   component: () => import('@/views/errorPage/404'),
-      //   hidden: true
-      // },
+      },
       // {
       //   path: '/401',
       //   component: () => import('@/views/errorPage/401'),

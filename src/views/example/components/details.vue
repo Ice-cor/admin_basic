@@ -7,9 +7,11 @@
     v-on="$listeners"
   >
     <template slot="form">
-      <h5>日期：{{dialogData.date}}</h5>
-      <h5>姓名：{{dialogData.name}}</h5>
-      <h5>地址：{{dialogData.address}}</h5>
+      <el-form>
+        <el-form-item label="姓名：">
+            <el-input placeholder="请输入姓名"></el-input>
+        </el-form-item>
+      </el-form>
     </template>
 
   </basic-dialog>

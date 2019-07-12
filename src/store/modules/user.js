@@ -1,11 +1,10 @@
-import { login, outLogin, getInfo, getMenus } from '@/api'
+// import { login, outLogin, getInfo, getMenus } from '@/api'
+import api from '@/api'
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 import { constantRouterMap, asyncRouterMap } from '@/router'
 import axios from 'axios'
 
-/*import Layout from '@/views/layout/Layout'
-import kehuList from '@/views/kehu/kehuList'
-import product from'@/views/kehu/product'*/
+const { outLogin,login,getMenus } = api.system
 
 function hasPermission(roles, route) {
   if (route.meta && route.meta.role) {
@@ -63,11 +62,8 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        // login(username, userInfo.password).then(res => {
-        axios
-          .post('http://localhost:8080/system/login', userInfo)
-          .then(res => {
-            const data = res.data
+        login(username, userInfo.password).then(res => {
+            const data = res
             if (data.status == 0 && data.token) {
               commit('SET_TOKEN', data.token)
               commit('SET_INFO', data.operatorInfo)
@@ -111,18 +107,13 @@ const user = {
 
     // 获取菜单
     GenerateRoutes({ commit }, data) {
-      // console.log(this.state,'state')
       return new Promise(resolve => {
-        const hiddenWhite = ['kehuInfo', 'productSet']
-        // console.log(this,'thhisssssssssssss')
+        const hiddenWhite = [] //不在菜单栏显示
         const operatorId = this.getters.info.operatorId
         const token = this.getters.token
 
-        // getMenus(operatorId,token).then(res => {
-        axios
-          .post('http://localhost:8080/system/login', operatorId, token)
-          .then(res => {
-            const data = res.data.operatorInfo.menus
+        getMenus(operatorId,token).then(res => {
+            const data = res.operatorInfo.menus
             let menus = data.map(item => {
               return {
                 path: `/${item.name}`,

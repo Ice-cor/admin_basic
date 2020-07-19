@@ -12,6 +12,7 @@ const _get = (url, data) => {
 
 // post请求
 const _post = (url, data) => {
+  console.log(data, '-----data')
   return request.post(url, JSON.stringify(data), {
     headers: {
       'Content-Type': 'application/json'

@@ -4,7 +4,7 @@ import store from '../store'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'https://easy-mock.com/mock/5d25a38dad09020a291cc752/basic/', // api的base_url
+  baseURL: 'https://www.test.com/mock', // api的base_url
   timeout: 5000 // 请求超时时间
   // headers: {
   //   client_ip: '192.168.0.174'
@@ -34,6 +34,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const data = response.data
+    console.log(response, 'response')
     if (data.status != 0) {
       Message({
         message: data.des,

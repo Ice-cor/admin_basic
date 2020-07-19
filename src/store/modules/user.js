@@ -64,6 +64,7 @@ const user = {
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(res => {
             const data = res
+            console.log(res, '----222')
             if (data.status == 0 && data.token) {
               commit('SET_TOKEN', data.token)
               commit('SET_INFO', data.operatorInfo)
@@ -111,8 +112,9 @@ const user = {
         const hiddenWhite = [] //不在菜单栏显示
         const operatorId = this.getters.info.operatorId
         const token = this.getters.token
-
-        getMenus(operatorId,token).then(res => {
+        console.log(operatorId, token, 'token')
+        getMenus(operatorId, token).then(res => {
+          console.log(res, '-----res')
             const data = res.operatorInfo.menus
             let menus = data.map(item => {
               return {
